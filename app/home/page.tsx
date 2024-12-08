@@ -46,7 +46,7 @@ export default function Homepage() {
 
         <div className="w-full lg:w-1/2  lg:mt-0 flex justify-center -z-50 ">
     <Image
-      src="/heroimg.jpg"
+      src="/herooimg.jpg"
       alt="Hero"
       width={700}
       height={400}
