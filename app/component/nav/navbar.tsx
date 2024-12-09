@@ -68,21 +68,21 @@ export default function Navbar() {
           >
             &times;
           </button>
-          <Link href="/category" className="py-2 text-lg">
+          <Link href="/category" className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>
             Category
           </Link>
           {/* <Link href="/productdetail" className="py-2 text-lg">
             ProductDetail
           </Link> */}
-          <Link href="/home" className="py-2 text-lg">
+          <Link href="/home" className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>
             New Arrivals
           </Link>
-          <Link href="/home" className="py-2 text-lg">
+          <Link href="/home" className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>
             Brands
           </Link>
-          <Link href="/category" className="py-2 text-lg">ProductDetail</Link>
-          <Link href={"/"} className="py-2 text-lg">Shop</Link>
-          <Link href={"/"} className="py-2 text-lg">On Sale</Link>
+          <Link href="/category" className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>ProductDetail</Link>
+          <Link href={"/"} className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>Shop</Link>
+          <Link href={"/"} className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>On Sale</Link>
         </div>
       )}
     </div>
