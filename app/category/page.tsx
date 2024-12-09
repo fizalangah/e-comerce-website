@@ -24,6 +24,7 @@ const CategoryPage = () => {
         <div key={product.id} className="flex flex-col items-center">
         { <div className=" w-[295px] h-auto rounded-[20px] p-4 flex flex-col items-center">
       {/* Image */}
+     
       <img
         src={product.imageUrl}
         alt="Product"

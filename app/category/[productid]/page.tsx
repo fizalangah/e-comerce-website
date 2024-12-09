@@ -1,7 +1,7 @@
-import { cardArrivalData, FilteredProducts } from "../../component/cardData";
+import {  FilteredProducts, TopsellingData } from "../../component/cardData";
 import Tabs from "../../component/tab";
 import Card from "../../component/cardcomp";
-
+import Link from "next/link";
 type ProducttProps = {
   params: {
     productid: string;
@@ -32,9 +32,9 @@ const Productsdetail = ({ params }: ProducttProps) => {
       <h2 className="text-center mt-3 p-2 font-bold">PRODUCT DETAIL</h2>
       <div className="flex flex-col lg:flex-row items-start justify-center max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-6">
         {/* Left Section: Images */}
-        <div className="flex flex-col lg:flex-row w-full lg:w-1/2 p-4">
+        <div className="flex flex-col lg:flex-row w-full lg:w-1/2 p-4 gap-4">
           {/* Thumbnails */}
-          <div className="flex lg:flex-col items-center lg:items-start space-x-4 lg:space-x-0 lg:space-y-4 mb-4 lg:mb-0">
+          <div className="flex lg:flex-col items-center lg:items-start space-x-4 lg:space-x-0 lg:space-y-6 mb-4 lg:mb-0 p-3">
             {Array(3)
               .fill(products.imageUrl)
               .map((src, index) => (
@@ -42,7 +42,7 @@ const Productsdetail = ({ params }: ProducttProps) => {
                   key={index}
                   src={products.imageUrl}
                   alt={`Thumbnail ${index + 1}`}
-                  className="w-20 h-20 rounded-lg border border-gray-200 object-cover cursor-pointer hover:border-blue-500"
+                  className="w-24 h-24 rounded-lg border border-gray-200 object-cover cursor-pointer hover:border-black"
                 />
               ))}
           </div>
@@ -70,7 +70,7 @@ const Productsdetail = ({ params }: ProducttProps) => {
             <button className="w-6 h-6 rounded-full bg-blue-500 border border-gray-300"></button>
             <button className="w-6 h-6 rounded-full bg-green-500 border border-gray-300"></button>
           </div>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+          <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-black">
             Add to Cart
           </button>
         </div>
@@ -87,9 +87,9 @@ const Productsdetail = ({ params }: ProducttProps) => {
       </h2>
       <div className="min-h-screen bg-white flex items-center justify-center flex-col">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cardArrivalData.map((card, index) => (
+          {TopsellingData.map((card, index) => (
             <Card
-              key={index}
+              key={card.id}
               imageUrl={card.imageUrl}
               title={card.title}
               rating={card.rating}
@@ -97,9 +97,7 @@ const Productsdetail = ({ params }: ProducttProps) => {
             />
           ))}
         </div>
-        <button className="px-10 py-1 rounded-2xl bg-white border hover:bg-gray-100 text-sm mt-6">
-          View ALL
-        </button>
+        <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  mb-2  text-sm'> <Link href='/category'>View ALL</Link></button>
       </div>
     </div>
   );

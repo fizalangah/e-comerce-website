@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Image from 'next/image';
-import { cardArrivalData } from '../component/cardData';
+import { cardArrivalData, TopsellingData } from '../component/cardData';
 import Card from '../component/cardcomp';
 
 import CustomerCarousel from '../component/custimercrousl';
+import Link from 'next/link';
 
 
  
@@ -86,7 +87,7 @@ export default function Homepage() {
           />
         ))}
       </div>
-      <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  text-sm'>View ALL</button>
+      <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  mb-2  text-sm'> <Link href='/category'>View ALL</Link></button>
       
     </div>
  
@@ -99,7 +100,7 @@ export default function Homepage() {
       <h2 className='text-center  pt-10 text-3xl font-extrabold bg-white  '>TOP SELLING</h2>
         <div className="min-h-screen bg-white flex items-center justify-center lg:-mt-20 flex-col">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {cardArrivalData.map((card, index) => (
+        {TopsellingData.map((card, index) => (
           <Card
             key={index}
             imageUrl={card.imageUrl}
@@ -109,8 +110,9 @@ export default function Homepage() {
           />
         ))}
       </div>
-      <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  mb-2  text-sm'>View ALL</button>
-      
+  
+      <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  mb-2  text-sm'> <Link href='/category'>View ALL</Link></button>
+     
     </div>
 
 
