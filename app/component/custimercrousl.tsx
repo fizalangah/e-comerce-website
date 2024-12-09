@@ -42,7 +42,7 @@ const CustomerCarousel = () => {
     <div className="relative max-w-screen-xl mx-auto px-5 py-10">
       {/* Previous Button */}
       <h2 className='text-left  text-3xl font-extrabold pl-10'>  OUR HAPPY CUSTOMERS</h2>
-      <div className=" pb-10 space-x-2 ml-[1200px] flex ">
+      <div className=" pb-10 space-x-2 flex ">
       <button
         className=" z-10 text-gray-500 bg-white rounded-full p-2 hover:bg-gray-200"
         onClick={prevSlide}

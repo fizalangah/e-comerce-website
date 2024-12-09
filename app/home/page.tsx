@@ -109,7 +109,7 @@ export default function Homepage() {
           />
         ))}
       </div>
-      <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  text-sm'>View ALL</button>
+      <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  mb-2  text-sm'>View ALL</button>
       
     </div>
 
