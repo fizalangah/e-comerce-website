@@ -56,7 +56,7 @@ export const TopsellingData = [
 export const  FilteredProducts  = [
   { 
     id:"1",
-    imageUrl: "/jeens.png",
+    imageUrl: "/image 7.png",
     title: "T-SHIRT WITH TAPE DETAILS",
     rating: 4,
     price: "$120",
@@ -75,7 +75,7 @@ export const  FilteredProducts  = [
     price: "$180",
   },
   {id :"4",
-    imageUrl: "orangshirt.png",
+    imageUrl: "/orangshirt.png",
     title: "SLEEVE STRIPED T-SHIRT",
     rating: 4,
     price: "$130",
@@ -99,7 +99,7 @@ export const  FilteredProducts  = [
     price: "$180",
   },
   {id:"8",
-    imageUrl: "image 10.png",
+    imageUrl: "/image 10.png",
     title: "SLEEVE STRIPED T-SHIRT",
     rating: 4,
     price: "$130",
