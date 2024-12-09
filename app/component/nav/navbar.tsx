@@ -31,7 +31,7 @@ export default function Navbar() {
         {/* Navbar Links (Hidden on Small Screens) */}
         <div className="hidden lg:flex gap-8">
           <Link href="/category">Category</Link>
-          <Link href="/productdetail">ProductDetail</Link>
+          {/* <Link href="/category">ProductDetail</Link> */}
           <Link href="/home">New Arrivals</Link>
           <Link href="/home">Brands</Link>
         </div>
@@ -69,9 +69,9 @@ export default function Navbar() {
           <Link href="/category" className="py-2 text-lg">
             Category
           </Link>
-          <Link href="/productdetail" className="py-2 text-lg">
+          {/* <Link href="/productdetail" className="py-2 text-lg">
             ProductDetail
-          </Link>
+          </Link> */}
           <Link href="/home" className="py-2 text-lg">
             New Arrivals
           </Link>
