@@ -8,7 +8,6 @@ import React from "react";
 }
 
 
-
 const Card: React.FC<ProductCardProps> = ({
   imageUrl,
   title,

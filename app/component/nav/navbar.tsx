@@ -1,13 +1,41 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsCart2 } from "react-icons/bs";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { FiMenu } from "react-icons/fi";
+import SearchBar from '../searchbar';
+// import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  
+    const [cartCount, setCartCount] = useState(0);
+  
+    // Update cart count when component loads
+    useEffect(() => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCartCount(cart.length);
+    }, []);
+
+    // Update cart count dynamically (if needed)
+  const updateCartCount = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartCount(cart.length);
+  };
+
+
+  // Example of adding a product to the cart
+  const handleCart = (productId: number) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (!cart.includes(productId)) {
+      cart.push(productId);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    updateCartCount(); // Update the cart count after adding an item
+  };
+  
 
   return (
     <div className="bg-white shadow-sm max-w-screen-xl  mx-auto ">
@@ -38,10 +66,10 @@ export default function Navbar() {
           <Link href="/home">Brands</Link>
         </div>
 
-        {/* Icons */}
+        {/* Icons
         <div className="flex items-center gap-6">
           {/* Search Input */}
-          <div className="hidden md:block relative">
+          {/* <div className="hidden md:block relative">
             <input 
               type="text"
               placeholder="Search for product"
@@ -50,11 +78,35 @@ export default function Navbar() {
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-400">
               <CiSearch className="text-xl "  />
             </span>
+          </div> */}
+
+             {/* Icons */}
+        <div className="flex items-center gap-6">
+          {/* Render SearchBar */}
+          <div className="hidden md:block">
+            <SearchBar />
           </div>
           {/* Cart and User Icons */}
           <CiSearch className="text-xl lg:hidden font-bold"   />
-         <Link href={"/cart"}> <BsCart2 className="text-xl" /></Link>
-          <FaRegCircleUser className="text-xl " />
+          <Link href="/cart">
+        <BsCart2 className="text-xl" />
+        {cartCount > 0 && (
+          <span className=   "  bg-red-500 text-white rounded-full text-[10px] w-4 h-4 flex items-center justify-center">
+            {cartCount}
+          </span>
+        )}
+      </Link>
+          {/* Show Login/Signup if Signed Out
+        //   {/* <SignedOut> */}
+        {/* //   <a href="/sigIn" className="text-blue-600">Login</a>
+        //   <a href="/signUp" className="text-blue-600">Sign Up</a>
+        // </SignedOut> */}
+
+        {/* Show UserButton if Signed In */}
+        {/* <SignedIn>
+          <UserButton />
+        </SignedIn> */}
+           <FaRegCircleUser className="text-xl " />
          
         </div>
       </div>
@@ -85,6 +137,12 @@ export default function Navbar() {
           <Link href={"/"} className="py-2 text-lg" onClick={() => setIsNavOpen(false)}>On Sale</Link>
         </div>
       )}
+      {/* Render LoginModal */}
+  
     </div>
   );
 }
+function useEffectEffect(arg0: () => void, arg1: undefined[]) {
+  throw new Error('Function not implemented.');
+}
+

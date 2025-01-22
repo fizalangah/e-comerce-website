@@ -1,27 +1,37 @@
- export const cardArrivalData = [
-  {
+
+  export  type Product = {
+   id: string;
+  imageUrl: string;
+  title: string;
+  rating: number;
+  price: number;
+};
+ 
+ export const cardArrivalData:Product[] = [
+  { id:" 1",
     imageUrl: "/blackshirt.png",
     title: "T-SHIRT WITH TAPE DETAILS",
     rating: 4,
-    price: "$120",
+    price: 120,
   },
-  {
+  { id:"2",
     imageUrl: "/jeens.png",
     title: "SKINNY FIT JEANS",
     rating:5,
-    price: "$240",
+    price: 240,
   },
-  {
+
+  {id:"3",
     imageUrl: "/tshirt.png",
     title: "CHECKERED SHIRT",
     rating: 3,
-    price: "$180",
+    price: 180,
   },
-  {
-    imageUrl: "orangshirt.png",
+  { id:"4",
+    imageUrl: "/orangshirt.png",
     title: "SLEEVE STRIPED T-SHIRT",
     rating: 4,
-    price: "$130",
+    price: 130,
   },
 ];
 
@@ -30,25 +40,25 @@ export const TopsellingData = [
     imageUrl: "/image33.png",
     title: "T-SHIRT WITH TAPE DETAILS",
     rating: 4,
-    price: "$120",
+    price: 120,
   },
   {id:2,
     imageUrl: "/Frame 34.png",
     title: "SKINNY FIT JEANS",
     rating: 5,
-    price: "$240",
+    price: 240,
   },
   {id:3,
     imageUrl: "/Frame 38.png",
     title: "CHECKERED SHIRT",
     rating: 3,
-    price: "$180",
+    price: 180,
   },
   {id:4,
     imageUrl: "/image 8.png",
     title: "SLEEVE STRIPED T-SHIRT",
     rating: 4,
-    price: "$130",
+    price: 130,
   },
 ]
 

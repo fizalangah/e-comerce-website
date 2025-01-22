@@ -1,15 +1,52 @@
+"use client";
 import React from 'react';
-
+ import { useState,useEffect } from 'react';
 import Image from 'next/image';
-import { cardArrivalData, TopsellingData } from '../component/cardData';
+// import { client} from '../lib/client';
+
+// import { cardArrivalData, TopsellingData } from '../component/cardData';
 import Card from '../component/cardcomp';
 
 import CustomerCarousel from '../component/custimercrousl';
 import Link from 'next/link';
+import { client } from '../../sanity/lib/client';
+import ArrivalSection from '../component/arrivalSection';
+import SellingSection from '../component/sellingSection';
+import BrowseByStyle from '../component/stylingSection';
 
 
  
 export default function Homepage() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await client.fetch(`
+          *[_type == "products"]{
+            _id,
+            name,
+            price,
+            description,
+            "imageUrl": image.asset->url,
+            category,
+            discountPercent,
+            new,
+            colors,
+            sizes
+          }
+        `);
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+
+
   return (
     <main className='max-w-screen-xl mx-auto'>
       
@@ -71,15 +108,15 @@ export default function Homepage() {
 
       {/* new arrival section */}
     
-    
+    <ArrivalSection/>
 
-      <div className='lg:-mt-[200px]   '>
+      {/* <div className='lg:-mt-[200px]   '>
       <h2 className='text-center  pt-10 text-3xl font-extrabold bg-white  '>NEW ARRIVALS</h2>
         <div className="min-h-screen bg-white flex items-center justify-center lg:-mt-20 flex-col">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {cardArrivalData.map((card, index) => (
+        {data.map((card, ) => (
           <Card
-            key={index}
+            key={card.id}
             imageUrl={card.imageUrl}
             title={card.title}
             rating={card.rating}
@@ -92,17 +129,17 @@ export default function Homepage() {
     </div>
  
     
-      </div>
+      </div> */}
 
       {/* top seling section */}
 
-
-      <h2 className='text-center  pt-10 text-3xl font-extrabold bg-white  '>TOP SELLING</h2>
+< SellingSection/>
+      {/* <h2 className='text-center  pt-10 text-3xl font-extrabold bg-white  '>TOP SELLING</h2>
         <div className="min-h-screen bg-white flex items-center justify-center lg:-mt-20 flex-col">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {TopsellingData.map((card, index) => (
+        {data.map((card, id) => (
           <Card
-            key={index}
+            key={card.id}
             imageUrl={card.imageUrl}
             title={card.title}
             rating={card.rating}
@@ -113,12 +150,13 @@ export default function Homepage() {
   
       <button className='px-10 py-1 rounded-2xl  bg-white  border hover:bg-[#F0F0F0]  mb-2  text-sm'> <Link href='/category'>View ALL</Link></button>
      
-    </div>
+    </div> */}
 
 
 
     {/* BROWSE BY dress STYLE SECTION */}
-       
+    <BrowseByStyle/>
+{/*        
     <div className='flex flex-col bg-[#F0F0F0] justify-center  gap-10 rounded-2xl mb-10  
      '>
       <h2 className='text-center pt-10 pb-10 text-3xl font-extrabold'> BROWSE BY DRESS STYLE</h2>
@@ -131,7 +169,7 @@ export default function Homepage() {
         <div className=' lg:w-1/3 w-1/2 bg-white '> <Image src={"/Frame 63.png"} alt='' height={289} width={407}/></div>
       </div>
       
-    </div>
+    </div> */}
 
     {/* customer comments */}
 

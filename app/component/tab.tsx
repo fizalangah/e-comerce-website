@@ -1,11 +1,40 @@
 "use client";
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReviewsTab from "./reviws";
+import { client } from "../../sanity/lib/client";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState("details");
+   const [data, setData] = useState([]);
+  
+    useEffect(() => {
+      const fetchProducts = async () => {
+        try {
+          const data = await client.fetch(`
+            *[_type == "products"]{
+              _id,
+              name,
+              price,
+              description,
+              "imageUrl": image.asset->url,
+              category,
+              discountPercent,
+              new,
+              colors,
+              sizes
+            }
+          `);
+          setData(data);
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        }
+      };
+  
+      fetchProducts();
+    }, []);
+  
 
   return (
     <div className="w-full max-w-4xl mx-auto mb-10">
@@ -49,9 +78,10 @@ const Tabs = () => {
           <div>
             <h2 className="text-lg font-semibold">Product Details</h2>
             <p className="mt-2 text-gray-600">
-            Wireless Bluetooth Headphones: Experience premium sound quality with active noise cancellation and up to 40 hours of battery life.
+            {data.map((product) => (product.description))}
+            {/* Wireless Bluetooth Headphones: Experience premium sound quality with active noise cancellation and up to 40 hours of battery life.
 Brand: AudioTech | Price: $129.99 | Rating: ★★★★☆ (4.5/5).
-Available in multiple colors (Black, White, Blue, Red) and In Stock.
+Available in multiple colors (Black, White, Blue, Red) and In Stock. */}
             </p>
           </div>
         )}
