@@ -10,12 +10,8 @@ export default function Mainpage() {
   return (
     <div className=" space-y-5">
 <Homepage/>
-<CategoryPage/>
-<<<<<<< Updated upstream
+<CategoryPage />
 
-
-=======
->>>>>>> Stashed changes
 <CartPage/>
 
     </div>
