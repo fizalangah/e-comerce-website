@@ -495,19 +495,23 @@ const CartPage = () => {
     (total, item) => total + (item.quantity || 0),
     0
   );
-
-  // Remove an item from the cart
   const removeItem = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    console.log("Removing product with id:", productId);
+    console.log("Cart before removal:", cartItems);
+  
+    const updatedCart = cartItems.filter((item) => item._id !== productId);
+    console.log("Updated Cart after removal:", updatedCart);
+  
+    setCartItems(updatedCart); // Update the state with the new cart
+    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
   };
+  
 
   // Increment quantity
   const incrementQuantity = (productId) => {
     const updatedCart = cartItems.map((item) =>
-      item.id === productId
-        ? { ...item, quantity: item.quantity + 1 }
+      item._id === productId
+        ? { ...item, quantity: item.quantity + 1 || 1 }
         : item
     );
     setCartItems(updatedCart);
@@ -517,7 +521,7 @@ const CartPage = () => {
   // Decrement quantity
   const decrementQuantity = (productId) => {
     const updatedCart = cartItems.map((item) =>
-      item.id === productId && item.quantity > 1
+      item._id === productId && item.quantity > 1
         ? { ...item, quantity: item.quantity - 1 }
         : item
     );
@@ -535,7 +539,7 @@ const CartPage = () => {
             <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
               <div className="space-y-6">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center gap-4">
+                  <div key={item._id} className="flex items-center gap-4">
                     <img
                       src={item.imageUrl}
                       alt={item.title}
@@ -543,29 +547,29 @@ const CartPage = () => {
                     />
                     <div className="flex-1">
                       <h2 className="font-medium">{item.name}</h2>
-                      <p className="text-sm text-gray-500">Size: {item.size}</p>
-                      <p className="text-sm text-gray-500">Color: {item.color}</p>
+                      <p className="text-sm text-gray-500">Size: {item.selectedSize}</p>
+                      <p className="text-sm text-gray-500">Color: {item.selectedColor}</p>
                       <p className="text-lg font-semibold mt-2">
                         ${Number(item.price).toFixed(2)}
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() => decrementQuantity(item.id)}
+                        onClick={() => decrementQuantity(item._id)}
                         className="p-2 bg-gray-100 rounded hover:bg-gray-200"
                       >
                         -
                       </button>
                       <span className="font-medium">{item.quantity}</span>
                       <button
-                        onClick={() => incrementQuantity(item.id)}
+                        onClick={() => incrementQuantity(item._id)}
                         className="p-2 bg-gray-100 rounded hover:bg-gray-200"
                       >
                         +
                       </button>
                     </div>
                     <button
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeItem(item._id)}
                       className="text-red-500 hover:text-red-700"
                     >
                       <svg

@@ -103,7 +103,6 @@ const CategoryPage = () => {
 };
 
 export default CategoryPage;
-
 // import Link from "next/link";
 // import { client } from "../../sanity/lib/client";
 // import Filter from "../component/filter";

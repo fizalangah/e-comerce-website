@@ -129,6 +129,7 @@
 // export default Productsdetail;
 
 "use client";
+
 import { useEffect, useState } from "react";
 import{ client} from "../../../sanity/lib/client"; // Update with your Sanity client path
 import Tabs from "../../component/tab";
@@ -144,6 +145,12 @@ type ProductProps = {
 const Productsdetail = ({ params }: ProductProps) => {
   const [product, setProduct] = useState<any>(null); // Store fetched product
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  console.log(selectedColor,"color");
+  
+  console.log(selectedSize,"size");
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -166,26 +173,58 @@ const Productsdetail = ({ params }: ProductProps) => {
           { productid: params.productid }
         );
         setProduct(data);
+  
+        // Fetch selectedSize from localStorage for this product
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const productInCart = cart.find(
+          (item: any) => item._id === data._id
+        );
+  
+        if (productInCart) {
+          setSelectedSize(productInCart.selectedSize); // Set the selected size
+          setProduct(productInCart.selectedColor); // Set the selected color
+        }
       } catch (error) {
         console.error("Error fetching product:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchProduct();
   }, [params.productid]);
-
+  console.log(product,"product");
+  
+  
   const handleCart = (product: any) => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const isProductInCart = cart.some((item: any) => item._id === product._id);
-    if (!isProductInCart) {
-      cart.push(product);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert("Product added to cart!");
-    } else {
-      alert("Product is already in the cart!");
+    if (!selectedSize && !selectedColor) {
+      alert("Please select a size and color  before adding to the cart!");
+      return;
     }
+  
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const isProductInCart = cart.some(
+    (item: any) => item._id === product._id && item.selectedSize === selectedSize && item.selectedColor === selectedColor
+  );
+  
+  if (!isProductInCart) {
+    // Create a new product object without 'sizes' array and include 'selectedSize'
+    const productWithSelectedSize = {
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      selectedColor, // Default to the first color
+        selectedSize// Only store the selected size
+    };
+  
+    cart.push(productWithSelectedSize);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Product added to cart!");
+  } else {
+    alert("Product with the selected size is already in the cart!");
+  }
+
   };
 
   if (loading) {
@@ -242,21 +281,44 @@ const Productsdetail = ({ params }: ProductProps) => {
           )}
           {product.new && <p className="text-green-600">New Arrival</p>}
           <div className="flex space-x-2">
-            <span className="text-gray-600">Colors:</span>
-            {product.colors?.map((color: string, index: number) => (
-              <button
-                key={index}
-                className={`w-6 h-6 rounded-full`}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-          <button
-            onClick={() => handleCart(product)}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-          >
-            Add to Cart
-          </button>
+  <span className="text-gray-600">Colors:</span>
+  {product.colors?.map((color: string, index: number) => (
+    <button
+      key={index}
+      className={`w-6 h-6 rounded-full border border-gray-300 cursor-pointer ${
+        selectedColor === color ? "ring-2 ring-blue-500" : ""
+      }`}
+      style={{ backgroundColor: color }}
+      onClick={() => setSelectedColor(color)} // Update selected color on click
+    />
+  ))}
+</div>
+
+
+         <div className="flex space-x-2">
+  <span className="text-gray-600">Sizes:</span>
+  {product.sizes?.map((size: string, index: number) => (
+    <span
+      key={index}
+      className={`px-2 py-1 border border-gray-300 rounded-lg ${
+        selectedSize === size ? "bg-gray-300 font-bold" : ""
+      } cursor-pointer`}
+      onClick={() => setSelectedSize(size)} // Update selected size on click
+    >
+      {size}
+    </span>
+  ))}
+</div>
+
+
+          
+            <button
+  className={`px-4 py-2 bg-blue-500 text-white rounded-lg ${selectedSize && selectedColor ? '' : 'opacity-50 cursor-not-allowed'}`}
+  onClick={() => handleCart(product)}
+  disabled={!selectedSize || !selectedColor}
+>
+  Add to Cart
+</button>
         </div>
       </div>
 
@@ -269,4 +331,3 @@ const Productsdetail = ({ params }: ProductProps) => {
 };
 
 export default Productsdetail;
-
