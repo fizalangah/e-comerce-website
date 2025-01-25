@@ -11,31 +11,58 @@ import SearchBar from '../searchbar';
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   
-    const [cartCount, setCartCount] = useState(0);
-  
-    // Update cart count when component loads
-    useEffect(() => {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      setCartCount(cart.length);
-    }, []);
+  const [cartCount, setCartCount] = useState(0);
 
-    // Update cart count dynamically (if needed)
+  // Function to synchronize cart count from localStorage
   const updateCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartCount(cart.length);
+    const totalItems = cart.reduce(
+      (sum: number, item: { quantity: number }) => sum + (item.quantity || 1),
+      0
+    );
+    setCartCount(totalItems);
   };
 
+  // Sync cart count when component mounts
+  useEffect(() => {
+    updateCartCount();
 
-  // Example of adding a product to the cart
-  const handleCart = (productId: number) => {
+    // Add event listener for storage changes
+    const handleStorageChange = () => {
+      updateCartCount();
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // Example function to add a product to the cart
+  const addToCart = (productId: number) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    if (!cart.includes(productId)) {
-      cart.push(productId);
-      localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Check if product already exists in the cart
+    const existingProductIndex = cart.findIndex(
+      (item: { id: number }) => item.id === productId
+    );
+
+    if (existingProductIndex !== -1) {
+      // If exists, increase quantity
+      cart[existingProductIndex].quantity =
+        (cart[existingProductIndex].quantity || 1) + 1;
+    } else {
+      // If not, add new product
+      cart.push({ id: productId, quantity: 1 });
     }
-    updateCartCount(); // Update the cart count after adding an item
+
+    // Update localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Trigger state update manually
+    updateCartCount();
   };
-  
+
 
   return (
     <div className="bg-white shadow-sm max-w-screen-xl  mx-auto ">
@@ -88,14 +115,17 @@ export default function Navbar() {
           </div>
           {/* Cart and User Icons */}
           <CiSearch className="text-xl lg:hidden font-bold"   />
-          <Link href="/cart">
-        <BsCart2 className="text-xl" />
-        {cartCount > 0 && (
-          <span className=   "  bg-red-500 text-white rounded-full text-[10px] w-4 h-4 flex items-center justify-center">
-            {cartCount}
-          </span>
-        )}
-      </Link>
+            <Link href="/cart">
+            <div className="relative">
+              <BsCart2 className="text-2xl" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+          </Link>
+          
           {/* Show Login/Signup if Signed Out
         //   {/* <SignedOut> */}
         {/* //   <a href="/sigIn" className="text-blue-600">Login</a>

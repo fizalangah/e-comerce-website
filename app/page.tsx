@@ -11,8 +11,11 @@ export default function Mainpage() {
     <div className=" space-y-5">
 <Homepage/>
 <CategoryPage/>
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 <CartPage/>
 
     </div>

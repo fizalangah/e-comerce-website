@@ -476,7 +476,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([])
 
   // Fetch cart items from localStorage on component mount
   useEffect(() => {
